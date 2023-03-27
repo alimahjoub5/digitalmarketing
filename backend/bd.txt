@@ -1,0 +1,100 @@
+CREATE TABLE Utilisateurs (
+  ID_Utilisateur INT PRIMARY KEY AUTO_INCREMENT,
+  Nom_Utilisateur VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Mot_de_passe VARCHAR(255) NOT NULL,
+  Solde FLOAT DEFAULT 0,
+  Image_de_profil VARCHAR(255),
+  Date_de_naissance DATE,
+  Ville VARCHAR(255)
+);
+
+CREATE TABLE Entreprises (
+  ID_Entreprise INT PRIMARY KEY AUTO_INCREMENT,
+  Nom_Entreprise VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Mot_de_passe VARCHAR(255) NOT NULL,
+  Solde FLOAT DEFAULT 0
+);
+
+CREATE TABLE Annonces (
+  ID_Annonce INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Entreprise INT,
+  Titre VARCHAR(255) NOT NULL,
+  Description TEXT NOT NULL,
+  Image VARCHAR(255),
+  Cout_par_vue FLOAT NOT NULL,
+  ID_Categorie INT,
+  FOREIGN KEY (ID_Entreprise) REFERENCES Entreprises(ID_Entreprise),
+  FOREIGN KEY (ID_Categorie) REFERENCES Categories(ID_Categorie)
+);
+
+CREATE TABLE Vues (
+  ID_Vue INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Utilisateur INT,
+  ID_Annonce INT,
+  Date_de_vue DATE,
+  FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur),
+  FOREIGN KEY (ID_Annonce) REFERENCES Annonces(ID_Annonce)
+);
+
+CREATE TABLE Administrateurs (
+  ID_Admin INT PRIMARY KEY AUTO_INCREMENT,
+  Nom_Admin VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Mot_de_passe VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Transactions (
+  ID_Transaction INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Emetteur INT,
+  ID_Receveur INT,
+  Montant FLOAT NOT NULL,
+  Date_de_transaction DATE NOT NULL,
+  FOREIGN KEY (ID_Emetteur) REFERENCES Utilisateurs(ID_Utilisateur),
+  FOREIGN KEY (ID_Receveur) REFERENCES Utilisateurs(ID_Utilisateur) ON DELETE CASCADE,
+  FOREIGN KEY (ID_Emetteur) REFERENCES Entreprises(ID_Entreprise),
+  FOREIGN KEY (ID_Receveur) REFERENCES Entreprises(ID_Entreprise) ON DELETE CASCADE
+);
+
+CREATE TABLE Categories (
+  ID_Categorie INT PRIMARY KEY AUTO_INCREMENT,
+  Nom_Categorie VARCHAR(255) NOT NULL,
+  Description TEXT
+);
+
+CREATE TABLE Feedback (
+  ID_Feedback INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Utilisateur INT,
+  ID_Entreprise INT,
+  Note FLOAT NOT NULL,
+  Texte_du_commentaire TEXT NOT NULL,
+  Date_du_commentaire DATE,
+  FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur),
+  FOREIGN KEY (ID_Entreprise) REFERENCES Entreprises(ID_Entreprise)
+);
+
+Table "Notifications" :
+
+CREATE TABLE Notifications (
+ID_Notification INT PRIMARY KEY AUTO_INCREMENT,
+ID_Utilisateur INT NOT NULL,
+ID_Entreprise INT NOT NULL,
+Texte_de_la_notification TEXT,
+Date_de_la_notification DATETIME,
+FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur),
+FOREIGN KEY (ID_Entreprise) REFERENCES Entreprises(ID_Entreprise)
+);
+
+Table "Campagnes" :
+
+CREATE TABLE Campagnes (
+ID_Campagne INT PRIMARY KEY AUTO_INCREMENT,
+ID_Entreprise INT NOT NULL,
+Nom_de_la_campagne VARCHAR(255),
+Budget FLOAT,
+Date_de_début DATE,
+Date_de_fin DATE,
+Critères_de_ciblage TEXT,
+FOREIGN KEY (ID_Entreprise) REFERENCES Entreprises(ID_Entreprise)
+);
