@@ -1,17 +1,10 @@
-const mysql = require('mysql2');
 const express = require('express');
-const bodyParser = require('body-parser');
-
-// Création d'une application Express
-const app = express();
-
-// Configuration de bodyParser pour traiter les données POST
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const router = express.Router();
+const connection = require('../config/config');
 
 
 // Route pour créer un nouvel utilisateur
-app.post('/utilisateurs', (req, res) => {
+router.post('/create', (req, res) => {
   const utilisateur = req.body;
   connection.query('INSERT INTO Utilisateurs SET ?', utilisateur, (err, result) => {
     if (err) throw err;
@@ -21,7 +14,7 @@ app.post('/utilisateurs', (req, res) => {
 });
 
 // Route pour récupérer tous les utilisateurs
-app.get('/utilisateurs', (req, res) => {
+router.get('/get', (req, res) => {
   connection.query('SELECT * FROM Utilisateurs', (err, rows) => {
     if (err) throw err;
     console.log(rows);
@@ -30,17 +23,19 @@ app.get('/utilisateurs', (req, res) => {
 });
 
 // Route pour récupérer un utilisateur par son ID
-app.get('/utilisateurs/:id', (req, res) => {
+router.get('/getid/:id', (req, res) => {
   const id = req.params.id;
-  connection.query('SELECT * FROM Utilisateurs WHERE ID_Utilisateur = ?', id, (err, rows) => {
+  const query = 'SELECT * FROM Utilisateurs WHERE ID_Utilisateur = ?';
+  connection.query(query, [id], (err, rows) => {
     if (err) throw err;
     console.log(rows);
     res.send(rows);
   });
 });
 
+
 // Route pour mettre à jour un utilisateur
-app.put('/utilisateurs/:id', (req, res) => {
+router.put('/udt/:id', (req, res) => {
   const id = req.params.id;
   const nouveauUtilisateur = req.body;
   connection.query('UPDATE Utilisateurs SET ? WHERE ID_Utilisateur = ?', [nouveauUtilisateur, id], (err, result) => {
@@ -51,16 +46,13 @@ app.put('/utilisateurs/:id', (req, res) => {
 });
 
 // Route pour supprimer un utilisateur
-app.delete('/utilisateurs/:id', (req, res) => {
-  const id = req.params.id;
-  connection.query('DELETE FROM Utilisateurs WHERE ID_Utilisateur = ?', id, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send('Utilisateur supprimé avec succès');
+router.delete('/del/:id', (req, res) => {
+    const query = 'DELETE FROM Utilisateurs WHERE ID_Utilisateur = ?';
+    connection.query(query, [req.params.id], (err, rows) => {
+      if (err) throw err;
+      console.log(rows);
+      res.send(rows);
+    });
   });
-});
 
-// Démarrage du serveur Express
-app.listen(3000, () => {
-  console.log('Serveur démarré sur le port 3000');
-});
+module.exports=router;

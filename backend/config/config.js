@@ -1,18 +1,22 @@
+const express = require('express');
 const mysql = require('mysql2');
+require('dotenv').config();
 
-// Créer une connexion à la base de données
+// Créer la connexion à la base de données
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'user',
-  password: 'password',
-  database: 'nom_de_la_base_de_donnees'
+  host: "localhost",
+  user: "root",
+  password: "mysql",
+  database: "marketing"
 });
 
-// Tester la connexion
-connection.connect((error) => {
-  if (error) {
-    console.error('Erreur de connexion à la base de données : ', error);
-  } else {
-    console.log('Connexion à la base de données réussie !');
+// Connecter à la base de données
+connection.connect((err) => {
+  if (err) {
+    console.error('Erreur de connexion à la base de données: ' + err.stack);
+    return;
   }
+  console.log('Connecté à la base de données avec l\'ID ' + connection.threadId);
 });
+
+module.exports = connection;
