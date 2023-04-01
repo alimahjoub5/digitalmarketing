@@ -45,7 +45,8 @@ CREATE TABLE `annonces` (
   `ID_Entreprise` int DEFAULT NULL,
   `Titre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `Image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `NB_Vue` int,
   `Cout_par_vue` float NOT NULL,
   `ID_Categorie` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

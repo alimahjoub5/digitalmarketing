@@ -4,14 +4,46 @@ const connection = require('../config/config');
 
 
 // Route pour créer un nouvel utilisateur
-router.post('/create', (req, res) => {
-  const utilisateur = req.body;
-  connection.query('INSERT INTO Utilisateurs SET ?', utilisateur, (err, result) => {
-    if (err) throw err;
-    console.log(result);
+const bcrypt = require('bcrypt');
+const { check, validationResult } = require('express-validator');
+
+// Validation des champs de saisie du formulaire
+router.post('/create', [
+  check('Nom_Utilisateur').notEmpty(),
+  check('Email').isEmail(),
+  check('Mot_de_passe').isLength({ min: 8 }),
+  check('Date_de_naissance').isISO8601().toDate(),
+], async (req, res) => {
+  // Vérification des erreurs de validation
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  // Hashage du mot de passe de l'utilisateur
+  const hash = await bcrypt.hash(req.body.Mot_de_passe, 10);
+
+  // Création de l'objet utilisateur à insérer dans la table
+  const utilisateur = {
+    Nom_Utilisateur: req.body.Nom_Utilisateur,
+    Email: req.body.Email,
+    Mot_de_passe: hash,
+    Solde: 0,
+    Image_de_profil: null,
+    Date_de_naissance: req.body.Date_de_naissance,
+    Ville: req.body.Ville,
+  };
+
+  // Insertion de l'utilisateur dans la table
+  try {
+    const result = await pool.query('INSERT INTO utilisateurs SET ?', utilisateur);
     res.send('Utilisateur ajouté avec succès');
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
 });
+
 
 // Route pour récupérer tous les utilisateurs
 router.get('/get', (req, res) => {
