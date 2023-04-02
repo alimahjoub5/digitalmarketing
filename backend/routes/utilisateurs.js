@@ -1,48 +1,95 @@
 const express = require('express');
 const router = express.Router();
 const connection = require('../config/config');
+const bodyParser = require('body-parser');
+const validator=require('Validator');
+
+// Configuration de bodyParser pour traiter les données POST
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
 
-// Route pour créer un nouvel utilisateur
 const bcrypt = require('bcrypt');
-const { check, validationResult } = require('express-validator');
+const pool = require('mysql2'); // remplacer "your-mysql-pool-module" par le nom du module de gestion de pool MySQL que vous utilisez
+router.use(express.json());
 
-// Validation des champs de saisie du formulaire
-router.post('/create', [
-  check('Nom_Utilisateur').notEmpty(),
-  check('Email').isEmail(),
-  check('Mot_de_passe').isLength({ min: 8 }),
-  check('Date_de_naissance').isISO8601().toDate(),
-], async (req, res) => {
-  // Vérification des erreurs de validation
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  // Hashage du mot de passe de l'utilisateur
-  const hash = await bcrypt.hash(req.body.Mot_de_passe, 10);
-
-  // Création de l'objet utilisateur à insérer dans la table
-  const utilisateur = {
-    Nom_Utilisateur: req.body.Nom_Utilisateur,
-    Email: req.body.Email,
-    Mot_de_passe: hash,
-    Solde: 0,
-    Image_de_profil: null,
-    Date_de_naissance: req.body.Date_de_naissance,
-    Ville: req.body.Ville,
-  };
-
-  // Insertion de l'utilisateur dans la table
+router.post('/create', async (req, res) => {
   try {
-    const result = await pool.query('INSERT INTO utilisateurs SET ?', utilisateur);
+    console.log('Requête reçue :', req.body);
+
+    const utilisateur = {
+      ID_utilisateur: req.body.ID_utilisateur,
+      Nom_Utilisateur: req.body.Nom_Utilisateur,
+      Email: req.body.Email,
+      Mot_de_passe: req.body.Mot_de_passe,
+      Solde: req.body.Solde,
+      Image_de_profil: req.body.Image_de_profil,
+      Date_de_naissance: req.body.Date_de_naissance,
+      Ville: req.body.Ville,
+    };
+
+    // Vérification des champs obligatoires
+    if (!utilisateur.Nom_Utilisateur) {
+      return res.status(400).send('Le champ Nom_Utilisateur est obligatoire');
+    }
+
+    if (!utilisateur.Email) {
+      return res.status(400).send('Le champ Email est obligatoire');
+    }
+
+    if (!utilisateur.Ville) {
+      return res.status(400).send('Le champ Ville est obligatoire');
+    }
+
+    if (!utilisateur.Mot_de_passe) {
+      return res.status(400).send('Le champ Mot_de_passe est obligatoire');
+    }
+
+    if (!utilisateur.Date_de_naissance) {
+      return res.status(400).send('Le champ Date_de_naissance est obligatoire');
+    }
+
+
+    // Vérification de l'adresse e-mail
+    if (!validator.isEmail(utilisateur.Email)) {
+      return res.status(400).send('Adresse e-mail invalide');
+    }
+
+    // Vérification de la complexité du mot de passe
+    if (utilisateur.Mot_de_passe.length < 8 || !/\d/.test(utilisateur.Mot_de_passe) || !/[A-Z]/.test(utilisateur.Mot_de_passe) || !/[a-z]/.test(utilisateur.Mot_de_passe)) {
+      return res.status(400).send('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre');
+    }
+
+    // Hash du mot de passe
+    const saltRounds = 10;
+    const hash = await bcrypt.hash(utilisateur.Mot_de_passe, saltRounds);
+
+    const query = 'INSERT INTO utilisateurs (ID_Utilisateur, Nom_Utilisateur, Email, Mot_de_passe, Solde, Image_de_profil, Date_de_naissance, Ville) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
+    connection.query(query, [
+      utilisateur.ID_utilisateur,
+      utilisateur.Nom_Utilisateur,
+      utilisateur.Email,
+      hash,
+      utilisateur.Solde,
+      utilisateur.Image_de_profil,
+      utilisateur.Date_de_naissance,
+      utilisateur.Ville
+    ]);
+    console.log('Utilisateur ajouté avec succès');
     res.send('Utilisateur ajouté avec succès');
   } catch (err) {
     console.error(err);
     res.status(500).send('Erreur serveur');
   }
 });
+
+
+
+
+//-------------------------------------------------------------------------------------------------------
+
+
 
 
 // Route pour récupérer tous les utilisateurs
@@ -66,16 +113,85 @@ router.get('/getid/:id', (req, res) => {
 });
 
 
+
+//------------------------------------------------------------------------------------------------
+
+
+
 // Route pour mettre à jour un utilisateur
-router.put('/udt/:id', (req, res) => {
-  const id = req.params.id;
-  const nouveauUtilisateur = req.body;
-  connection.query('UPDATE Utilisateurs SET ? WHERE ID_Utilisateur = ?', [nouveauUtilisateur, id], (err, result) => {
-    if (err) throw err;
-    console.log(result);
+router.put('/update/:id', async (req, res) => {
+  try {
+    console.log('Requête reçue :', req.body);
+
+    const utilisateur = {
+      ID_utilisateur: req.params.id,
+      Nom_Utilisateur: req.body.Nom_Utilisateur,
+      Email: req.body.Email,
+      Mot_de_passe: req.body.Mot_de_passe,
+      Solde: req.body.Solde,
+      Image_de_profil: req.body.Image_de_profil,
+      Date_de_naissance: req.body.Date_de_naissance,
+      Ville: req.body.Ville,
+    };
+
+    // Vérification des champs obligatoires
+    // Vérification des champs obligatoires
+    if (!utilisateur.Nom_Utilisateur) {
+      return res.status(400).send('Le champ Nom_Utilisateur est obligatoire');
+    }
+
+    if (!utilisateur.Email) {
+      return res.status(400).send('Le champ Email est obligatoire');
+    }
+
+    if (!utilisateur.Ville) {
+      return res.status(400).send('Le champ Ville est obligatoire');
+    }
+
+    if (!utilisateur.Mot_de_passe) {
+      return res.status(400).send('Le champ Mot_de_passe est obligatoire');
+    }
+
+    if (!utilisateur.Date_de_naissance) {
+      return res.status(400).send('Le champ Date_de_naissance est obligatoire');
+    }
+
+    // Vérification de l'adresse e-mail
+    if (!validator.isEmail(utilisateur.Email)) {
+      return res.status(400).send('Adresse e-mail invalide');
+    }
+
+    // Vérification de la complexité du mot de passe
+    if (utilisateur.Mot_de_passe.length < 8 || !/\d/.test(utilisateur.Mot_de_passe) || !/[A-Z]/.test(utilisateur.Mot_de_passe) || !/[a-z]/.test(utilisateur.Mot_de_passe)) {
+      return res.status(400).send('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre');
+    }
+
+    // Hashage du mot de passe
+    const salt = bcrypt.genSaltSync(10);
+    utilisateur.Mot_de_passe = bcrypt.hashSync(utilisateur.Mot_de_passe, salt);
+
+    const query = 'UPDATE utilisateurs SET Nom_Utilisateur = ?, Email = ?, Mot_de_passe = ?, Solde = ?, Image_de_profil = ?, Date_de_naissance = ?, Ville = ? WHERE ID_utilisateur = ?';
+
+    connection.query(query, [
+      utilisateur.Nom_Utilisateur,
+      utilisateur.Email,
+      utilisateur.Mot_de_passe,
+      utilisateur.Solde,
+      utilisateur.Image_de_profil,
+      utilisateur.Date_de_naissance,
+      utilisateur.Ville,
+      utilisateur.ID_utilisateur
+    ]);
+    console.log('Utilisateur mis à jour avec succès');
     res.send('Utilisateur mis à jour avec succès');
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
 });
+
+
+//-----------------------------------------------------------------------------------------------------
 
 // Route pour supprimer un utilisateur
 router.delete('/del/:id', (req, res) => {
