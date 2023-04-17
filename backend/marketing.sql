@@ -31,8 +31,10 @@ CREATE TABLE `administrateurs` (
   `ID_Admin` int NOT NULL,
   `Nom_Admin` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `Mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `Mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `solde` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 
@@ -115,12 +117,14 @@ CREATE TABLE `feedback` (
 --
 
 CREATE TABLE `transactions` (
-  `ID_Transaction` int NOT NULL,
-  `ID_Emetteur` int DEFAULT NULL,
-  `ID_Receveur` int DEFAULT NULL,
+  `ID_Transaction` int NOT NULL AUTO_INCREMENT,
+  `ID_Emetteur` int NOT NULL,
+  `ID_Receveur` int NOT NULL,
   `Montant` float NOT NULL,
-  `Date_de_transaction` date NOT NULL
+  `Date_de_transaction` date NOT NULL,
+  PRIMARY KEY (`ID_Transaction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 

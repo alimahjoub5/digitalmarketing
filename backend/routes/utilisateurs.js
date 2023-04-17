@@ -3,14 +3,14 @@ const router = express.Router();
 const connection = require('../config/config');
 const bodyParser = require('body-parser');
 const validator=require('Validator');
+const bcrypt = require('bcrypt');
+
 
 // Configuration de bodyParser pour traiter les données POST
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 
-const bcrypt = require('bcrypt');
-const pool = require('mysql2'); // remplacer "your-mysql-pool-module" par le nom du module de gestion de pool MySQL que vous utilisez
 router.use(express.json());
 
 router.post('/create', async (req, res) => {
@@ -202,5 +202,43 @@ router.delete('/del/:id', (req, res) => {
       res.send(rows);
     });
   });
+
+
+//----------------------------------------------------------------------------------------------------
+
+// Route pour la connexion d'un utilisateur
+router.post('/connexion', async (req, res) => {
+  try {
+    const { Email, Mot_de_passe } = req.body;
+
+    // Recherche de l'utilisateur dans la base de données
+    const query = 'SELECT * FROM utilisateurs WHERE Email = ?';
+    connection.query(query, [Email], async (err, results) => {
+      if (err) throw err;
+
+      if (results.length === 0) {
+        res.status(401).send('Email ou mot de passe incorrect');
+        return;
+      }
+
+      const utilisateur = results[0];
+
+      // Comparaison du mot de passe hashé avec celui fourni
+      const match = await bcrypt.compare(Mot_de_passe, utilisateur.Mot_de_passe);
+
+      if (match) {
+        // Authentification réussie
+        // Vous pouvez générer un jeton d'authentification ici et le renvoyer au client
+        res.send('Authentification réussie');
+      } else {
+        res.status(401).send('Email ou mot de passe incorrect');
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
 
 module.exports=router;

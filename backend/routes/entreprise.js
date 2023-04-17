@@ -3,14 +3,11 @@ const router = express.Router();
 const connection = require('../config/config');
 const bodyParser = require('body-parser');
 const validator=require('Validator');
+const bcrypt = require('bcrypt');
 
 // Configuration de bodyParser pour traiter les données POST
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-
-
-const bcrypt = require('bcrypt');
-const pool = require('mysql2'); // remplacer "your-mysql-pool-module" par le nom du module de gestion de pool MySQL que vous utilisez
 router.use(express.json());
 
 
@@ -106,7 +103,6 @@ router.get('/getid/:id', (req, res) => {
 //--------------------------------------------------------------------------------------------------------
 
 // Route pour mettre à jour une entreprise
-const bcrypt = require('bcrypt');
 
 router.put('/update/:id', async (req, res) => {
   try {
