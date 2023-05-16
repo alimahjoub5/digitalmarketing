@@ -191,35 +191,70 @@ router.put('/update/:id', async (req, res) => {
 });
 
 // Route pour blocker un utilisateur
-router.put('/block/:id', async (req, res) => {
+router.post('/block/:id', async (req, res) => {
   try {
+    const userId = req.params.id;
     console.log('Requête reçue :', req.body);
-
-    const utilisateur = {
-      ID_utilisateur: req.params.id,
-      Nom_Utilisateur: req.body.Nom_Utilisateur,
-      Email: req.body.Email,
-      Mot_de_passe: req.body.Mot_de_passe,
-      Solde: req.body.Solde,
-      Image_de_profil: req.body.Image_de_profil,
-      Date_de_naissance: req.body.Date_de_naissance,
-      Ville: req.body.Ville,
-    };
-  }catch (err){
-    console.log(err)
+    const query = 'UPDATE utilisateurs SET Etat = 0 WHERE ID_utilisateur = ?';
+    connection.query(query, [userId], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Erreur serveur');
+      } else {
+        console.log('Utilisateur mis à jour avec succès');
+        res.send('Utilisateur mis à jour avec succès');
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
   }
 });
+
+// Route pour unblocker un utilisateur
+router.post('/unblock/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log('Requête reçue :', req.body);
+    const query = 'UPDATE utilisateurs SET Etat = 1 WHERE ID_utilisateur = ?';
+    connection.query(query, [userId], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Erreur serveur');
+      } else {
+        console.log('Utilisateur mis à jour avec succès');
+        res.send('Utilisateur mis à jour avec succès');
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
 //-----------------------------------------------------------------------------------------------------
 
+
 // Route pour supprimer un utilisateur
-router.delete('/del/:id', (req, res) => {
-    const query = 'DELETE FROM Utilisateurs WHERE ID_Utilisateur = ?';
-    connection.query(query, [req.params.id], (err, rows) => {
-      if (err) throw err;
-      console.log(rows);
-      res.send(rows);
+router.post('/del/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const query = 'DELETE FROM utilisateurs WHERE ID_Utilisateur = ?';
+    connection.query(query, [userId], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Erreur serveur');
+      } else {
+        console.log('Utilisateur supprimé avec succès');
+        res.send('Utilisateur supprimé avec succès');
+      }
     });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
 
 
 //----------------------------------------------------------------------------------------------------

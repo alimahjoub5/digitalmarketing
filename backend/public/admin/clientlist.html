@@ -127,34 +127,89 @@
             <tbody id="user-table">
 <script src="js/ajax.js"></script>
 <script>
-    $(document).ready(function() {
-        // Récupère les données de l'utilisateur avec l'ID 1
-        $.ajax({
-            url: '/user/get',
-            method: 'GET',
-            success: function(rows) {
-                // Crée une nouvelle ligne pour chaque utilisateur et ajoute les données dans les cellules correspondantes
-                for (var i = 0; i < rows.length; i++) {
-                    var newRow = $('<tr>');
-                    newRow.append('<td>' + rows[i].ID_Utilisateur + '</td>');
-                    newRow.append('<td>' + rows[i].Nom_Utilisateur + '</td>');
-                    newRow.append('<td>' + rows[i].Email + '</td>');
-                    newRow.append('<td>' + rows[i].tel + '</td>');
-                    newRow.append('<td>' + rows[i].Solde + '</td>');
-                    newRow.append('<td>' + rows[i].Date_de_naissance + '</td>');
-                    newRow.append('<td>' + rows[i].Ville + '</td>');
-                    newRow.append('<td>' +
-        '<a class="btn btn-warning" onclick="return confirm(\'Êtes-vous sûr de vouloir bloquer cet élément ?\');">Bloquer</a>' +
-        '<a class="btn btn-danger" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer cet élément ?\');">Supprimer</a>' +
-    '</td>');
-                    $('#user-table').append(newRow);
-                }
-            },
-            error: function(err) {
-                console.error(err);
-            }
-        });
-    });
+$(document).ready(function() {
+  // Récupère les données de tous les utilisateurs
+  $.ajax({
+    url: '/user/get',
+    method: 'GET',
+    success: function(rows) {
+      // Crée une nouvelle ligne pour chaque utilisateur et ajoute les données dans les cellules correspondantes
+      for (var i = 0; i < rows.length; i++) {
+        var newRow = $('<tr>');
+        newRow.append('<td>' + rows[i].ID_Utilisateur + '</td>');
+        newRow.append('<td>' + rows[i].Nom_Utilisateur + '</td>');
+        newRow.append('<td>' + rows[i].Email + '</td>');
+        newRow.append('<td>' + rows[i].tel + '</td>');
+        newRow.append('<td>' + rows[i].Solde + '</td>');
+        newRow.append('<td>' + rows[i].Date_de_naissance + '</td>');
+        newRow.append('<td>' + rows[i].Ville + '</td>');
+        // Code pour le bouton "Bloquer"
+        if (rows[i].Etat == 0) {
+          newRow.append('<td>' +
+            '<a class="btn btn-success" onclick="unblockUser(' + rows[i].ID_Utilisateur + ');">Débloquer</a>' +
+            '<a class="btn btn-danger" onclick="supUser(' + rows[i].ID_Utilisateur + ');">Supprimer</a>' +
+            '</td>');
+        } else {
+          newRow.append('<td>' +
+            '<a class="btn btn-warning" onclick="blockUser(' + rows[i].ID_Utilisateur + ');">Bloquer</a>' +
+            '<a class="btn btn-danger" onclick="supUser(' + rows[i].ID_Utilisateur + ');">Supprimer</a>' +
+            '</td>');
+        }
+        $('#user-table').append(newRow);
+      }
+    },
+    error: function(err) {
+      console.error(err);
+    }
+  });
+});
+
+// Fonction pour supprimer un utilisateur
+function supUser(userId) {
+  $.ajax({
+    url: '/user/del/'+ userId,
+    method: 'POST',
+    success: function(response) {
+      alert(response);
+      location.reload();
+    },
+    error: function(err) {
+      console.error(err);
+    }
+  });
+}
+
+
+// Fonction pour bloquer un utilisateur
+function blockUser(userId) {
+  $.ajax({
+    url: '/user/block/' + userId,
+    method: 'POST',
+    success: function(response) {
+      alert(response);
+      location.reload();
+    },
+    error: function(err) {
+      console.error(err);
+    }
+  });
+}
+
+// Fonction pour débloquer un utilisateur
+function unblockUser(userId) {
+  $.ajax({
+    url: '/user/unblock/' + userId,
+    method: 'POST',
+    success: function(response) {
+      alert(response);
+      location.reload();
+    },
+    error: function(err) {
+      console.error(err);
+    }
+  });
+}
+
 </script>
                 
              
