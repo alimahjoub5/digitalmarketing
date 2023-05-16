@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql2');
+
 require('dotenv').config();
 
 // Créer la connexion à la base de données
@@ -18,5 +19,6 @@ connection.connect((err) => {
   }
   console.log('Connecté à la base de données avec l\'ID ' + connection.threadId);
 });
+
 
 module.exports = connection;

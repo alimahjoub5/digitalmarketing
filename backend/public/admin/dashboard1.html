@@ -12,6 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
+
+
 <div class="sidebar">
     <div class="logo-details">
       <!--  <i class='bx bxl-c-plus-plus'></i>-->
@@ -70,14 +73,34 @@
                 <span class="links_name">Settings</span>
             </a>
         </li>
-        <li class="log_out">
-            <a href="#">
+        <li class="log_out" id="logout-button">
+            <a>
                 <i class='bx bx-log-out'></i>
                 <span class="links_name">Log out</span>
             </a>
         </li>
     </ul>
 </div>
+
+
+<script>
+  const logoutButton = document.getElementById('logout-button');
+  logoutButton.addEventListener('click', () => {
+    // Envoyer une requête GET à la route de déconnexion
+    fetch('/deconnexion', {
+      method: 'GET'
+    })
+    .then(response => {
+      // Rediriger vers la page de connexion
+      window.location.href = '/login';
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  });
+</script>
+
+
 <section class="home-section">
     <nav>
         <div class="sidebar-button">
@@ -90,17 +113,42 @@
         </div>
         <div class="profile-details">
             <!--<img src="images/profile.jpg" alt="">-->
-            <span class="admin_name">Prem Shahi</span>
+            <span class="admin_name" id="admin_name"></span>
             <i class='bx bx-chevron-down' ></i>
         </div>
     </nav>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Récupère les données de l'utilisateur avec l'ID 1
+			$.ajax({
+				url: '/admin/getid/1',
+				method: 'GET',
+				success: function(rows) {
+					// Affiche les données de l'utilisateur dans la page
+					var utilisateur = rows[0];
+                    console.log(utilisateur.Nom_Admin)
+                    $('#admin_name').html($('#admin_name').html() + '<span>' + utilisateur.Nom_Admin + '</span>');
+                    $('#solde').html($('#solde').html() + '<span>$ ' + utilisateur.solde+ '</span>');
+
+                },
+				error: function(err) {
+					console.error(err);
+				}
+			});
+		});
+	</script>
+	<div id="utilisateur"></div>	
+
 
     <div class="home-content">
         <div class="overview-boxes">
             <div class="box">
                 <div class="right-side">
-                    <div class="box-topic">Total viewed</div>
-                    <div class="number">40,876</div>
+                    <div class="box-topic">Total solde</div>
+                    <div class="number" id="solde"></div>
                     <div class="indicator">
                         <i class='bx bx-up-arrow-alt'></i>
                         <span class="text">Up from yesterday</span>

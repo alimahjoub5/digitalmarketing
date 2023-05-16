@@ -136,6 +136,7 @@ CREATE TABLE `utilisateurs` (
   `ID_Utilisateur` int NOT NULL,
   `Nom_Utilisateur` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `tel` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
   `Mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Solde` float DEFAULT '0',
   `Image_de_profil` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,

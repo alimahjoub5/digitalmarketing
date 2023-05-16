@@ -89,22 +89,41 @@
                 <input type="text" placeholder="Search...">
                 <i class='bx bx-search' ></i>
             </div>
-            <div class="profile-details">
-                <!--<img src="images/profile.jpg" alt="">-->
-                <span class="admin_name">Prem Shahi</span><br>
-                <i class='bx bx-chevron-down' ></i>
-            </div>
         </nav>
        <div class="container">
             <div class="profile">
                 <br><br><br><br><br>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(function() {
+			// Récupère les données de l'utilisateur avec l'ID 1
+			$.ajax({
+				url: '/admin/getid/1',
+				method: 'GET',
+				success: function(rows) {
+					// Affiche les données de l'utilisateur dans la page
+					var utilisateur = rows[0];
+                    console.log(utilisateur.Nom_Admin)
+                    $('#name').html($('#name').html() + '<span>' + utilisateur.Nom_Admin + '</span>');
+                    $('#email').html($('#email').html() + '<span> ' + utilisateur.Email+ '</span>');
+                    $('#phone').html($('#phone').html() + '<span> ' + utilisateur.phone+ '</span>');
+
+                },
+				error: function(err) {
+					console.error(err);
+				}
+			});
+		});
+                </script>
+
                 <img src="img/2.png" alt="Admin Avatar">
-                <h1>Admin Name</h1>
-                <h2>Web Developer</h2>
-                <p>Email: admin@example.com</p>
-                <p>Phone: (+216) 23 568 998</p>
-                <p>Adresse: Tunisia </p>
-                <p>Skills:php,html,css,java</p>
+                <h1 id="name"></h1>
+                <h2></h2>
+                <p id="email">Email : </p>
+                <p id="phone">Phone:</p>
+                <p><p id="adresse"></p></p>
+                <p hidden>Skills:php,html,css,java</p>
                 <button>Edit Profile</button>
             </div></div>
             <script src="./js/profil.js"></script>

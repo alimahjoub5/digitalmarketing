@@ -118,37 +118,45 @@
                 <th scope="col">Nom</th>
                 <th scope="col">Email</th>
                 <th scope="col">Téléphone</th>
-                <th scope="col">Sujet</th>
-                <th scope="col">Messages</th>
-                <th scope="col">Dates</th>
+                <th scope="col">solde</th>
+                <th scope="col">date de naissance</th>
+                <th scope="col">ville</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
-
-
-        <tbody>
-           <tr>
+            <tbody id="user-table">
+<script src="js/ajax.js"></script>
+<script>
+    $(document).ready(function() {
+        // Récupère les données de l'utilisateur avec l'ID 1
+        $.ajax({
+            url: '/user/get',
+            method: 'GET',
+            success: function(rows) {
+                // Crée une nouvelle ligne pour chaque utilisateur et ajoute les données dans les cellules correspondantes
+                for (var i = 0; i < rows.length; i++) {
+                    var newRow = $('<tr>');
+                    newRow.append('<td>' + rows[i].ID_Utilisateur + '</td>');
+                    newRow.append('<td>' + rows[i].Nom_Utilisateur + '</td>');
+                    newRow.append('<td>' + rows[i].Email + '</td>');
+                    newRow.append('<td>' + rows[i].tel + '</td>');
+                    newRow.append('<td>' + rows[i].Solde + '</td>');
+                    newRow.append('<td>' + rows[i].Date_de_naissance + '</td>');
+                    newRow.append('<td>' + rows[i].Ville + '</td>');
+                    newRow.append('<td>' +
+        '<a class="btn btn-warning" onclick="return confirm(\'Êtes-vous sûr de vouloir bloquer cet élément ?\');">Bloquer</a>' +
+        '<a class="btn btn-danger" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer cet élément ?\');">Supprimer</a>' +
+    '</td>');
+                    $('#user-table').append(newRow);
+                }
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        });
+    });
+</script>
                 
-                <th scope='row'>123</th>
-                <td>
-                    oumaima
-                </td>
-                <td>oumaimahouimel@gmail.com</td>
-                <td>
-                    96537137
-                </td>
-                <td>front</td>
-                <td>
-                    jsp
-                </td>
-                <td>
-                    23mars
-                </td>
-                <td>
-                    <a  class='btn btn-warning' onclick='return confirm("Êtes-vous sûr de vouloir bloquer cet élément ?");'>Bloquer</a>
-
-                    <a class='btn btn-danger' onclick='return confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");'>Supprimer</a>
-                </td> 
              
            
         </tbody>

@@ -92,7 +92,7 @@ router.post('/transaction', (req, res) => {
 
 
     // Route pour effectuer une transaction entre un utilisateur et autre
-router.post('/transaction', (req, res) => {
+router.post('/transactionAdmin', (req, res) => {
   const transaction = {
     emetteur: req.body.emetteur,
     receveur: req.body.receveur,
@@ -101,7 +101,6 @@ router.post('/transaction', (req, res) => {
     
     // Convertir les valeurs en nombres
     const emetteur = Number(transaction.emetteur);
-    const receveur = Number(transaction.receveur);
     const montant = parseFloat(transaction.montant);
     
     console.log(transaction);
@@ -143,7 +142,7 @@ router.post('/transaction', (req, res) => {
     
       // Ajouter le montant de la transaction au solde de l'administrateur receveur
       const query1 = 'UPDATE administrateurs SET Solde = Solde + ? WHERE ID_Admin = 1';
-      connection.query(query1, [montant, receveur], (err, result) => {
+      connection.query(query1, [montant], (err, result) => {
         if (err) {
           console.error(err);
           res.status(500).send("Une erreur s'est produite lors de la mise à jour du solde de l'administrateur receveur");
@@ -152,8 +151,8 @@ router.post('/transaction', (req, res) => {
     
         // Insérer la transaction dans la table transactions
         const dateTime = new Date().toISOString().slice(0, 19).replace('T', ' '); // Date et heure au format YYYY-MM-DD HH:MM:SS
-        const query2 = 'INSERT INTO transactions (ID_Emetteur, ID_Receveur, Montant, Date_de_transaction) VALUES (?, ?, ?, ?)';
-        connection.query(query2, [emetteur, receveur, montant, dateTime], (err, result) => {
+        const query2 = 'INSERT INTO transactions (ID_Emetteur, ID_Receveur, Montant, Date_de_transaction) VALUES (?, 1, ?, ?)';
+        connection.query(query2, [emetteur, montant, dateTime], (err, result) => {
           if (err) {
             console.error(err);
             res.status(500).send("Une erreur s'est produite lors de l'insertion de la transaction dans la table transactions");
