@@ -190,7 +190,25 @@ router.put('/update/:id', async (req, res) => {
   }
 });
 
+// Route pour blocker un utilisateur
+router.put('/block/:id', async (req, res) => {
+  try {
+    console.log('Requête reçue :', req.body);
 
+    const utilisateur = {
+      ID_utilisateur: req.params.id,
+      Nom_Utilisateur: req.body.Nom_Utilisateur,
+      Email: req.body.Email,
+      Mot_de_passe: req.body.Mot_de_passe,
+      Solde: req.body.Solde,
+      Image_de_profil: req.body.Image_de_profil,
+      Date_de_naissance: req.body.Date_de_naissance,
+      Ville: req.body.Ville,
+    };
+  }catch (err){
+    console.log(err)
+  }
+});
 //-----------------------------------------------------------------------------------------------------
 
 // Route pour supprimer un utilisateur
