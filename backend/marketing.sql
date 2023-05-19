@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mar. 28 mars 2023 à 10:31
+-- Généré le : mar. 16 mai 2023 à 14:15
 -- Version du serveur : 8.0.31
 -- Version de PHP : 7.4.33
 
@@ -31,10 +31,17 @@ CREATE TABLE `administrateurs` (
   `ID_Admin` int NOT NULL,
   `Nom_Admin` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
   `Mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `solde` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `administrateurs`
+--
+
+INSERT INTO `administrateurs` (`ID_Admin`, `Nom_Admin`, `Email`, `phone`, `Mot_de_passe`, `solde`) VALUES
+(1, 'ali mahjoub', 'ali@admin.com', '50345057', '12345678', 121);
 
 -- --------------------------------------------------------
 
@@ -47,8 +54,7 @@ CREATE TABLE `annonces` (
   `ID_Entreprise` int DEFAULT NULL,
   `Titre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `NB_Vue` int,
+  `Image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Cout_par_vue` float NOT NULL,
   `ID_Categorie` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -92,8 +98,15 @@ CREATE TABLE `entreprises` (
   `Nom_Entreprise` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `Solde` float DEFAULT '0'
+  `Solde` double DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `entreprises`
+--
+
+INSERT INTO `entreprises` (`ID_Entreprise`, `Nom_Entreprise`, `Email`, `Mot_de_passe`, `Solde`) VALUES
+(1, 'mdev', 'mdev@gmail.com', 'ks,dckkdc,kcd', 0);
 
 -- --------------------------------------------------------
 
@@ -117,14 +130,21 @@ CREATE TABLE `feedback` (
 --
 
 CREATE TABLE `transactions` (
-  `ID_Transaction` int NOT NULL AUTO_INCREMENT,
+  `ID_Transaction` int NOT NULL,
   `ID_Emetteur` int NOT NULL,
   `ID_Receveur` int NOT NULL,
   `Montant` float NOT NULL,
-  `Date_de_transaction` date NOT NULL,
-  PRIMARY KEY (`ID_Transaction`)
+  `Date_de_transaction` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `transactions`
+--
+
+INSERT INTO `transactions` (`ID_Transaction`, `ID_Emetteur`, `ID_Receveur`, `Montant`, `Date_de_transaction`) VALUES
+(1, 1, 1, 10, '2023-04-03'),
+(2, 1, 1, 100, '2023-04-03'),
+(3, 1, 1, 10, '2023-04-03');
 
 -- --------------------------------------------------------
 
@@ -135,14 +155,23 @@ CREATE TABLE `transactions` (
 CREATE TABLE `utilisateurs` (
   `ID_Utilisateur` int NOT NULL,
   `Nom_Utilisateur` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `Email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `Email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `tel` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
   `Mot_de_passe` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `Solde` float DEFAULT '0',
   `Image_de_profil` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Date_de_naissance` date DEFAULT NULL,
-  `Ville` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Ville` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Etat` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `utilisateurs`
+--
+
+INSERT INTO `utilisateurs` (`ID_Utilisateur`, `Nom_Utilisateur`, `Email`, `tel`, `Mot_de_passe`, `Solde`, `Image_de_profil`, `Date_de_naissance`, `Ville`, `Etat`) VALUES
+(167, 'mahjoub', '', '', 'ali147258+', 200, ',czks,vdfv.jpg', '2001-04-22', 'mestir', 1),
+(169, 'asma chatti', '', '', '$2b$10$U47m/ou3zQ/XlrM9rVwQHusvThBJQ1DJziqPZvdQchEnulWGoUIg6', 200, ',czks,vdfv.jpg', '2002-12-04', 'sousse', 1);
 
 -- --------------------------------------------------------
 
@@ -206,9 +235,7 @@ ALTER TABLE `feedback`
 -- Index pour la table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`ID_Transaction`),
-  ADD KEY `ID_Emetteur` (`ID_Emetteur`),
-  ADD KEY `ID_Receveur` (`ID_Receveur`);
+  ADD PRIMARY KEY (`ID_Transaction`);
 
 --
 -- Index pour la table `utilisateurs`
@@ -232,7 +259,7 @@ ALTER TABLE `vues`
 -- AUTO_INCREMENT pour la table `administrateurs`
 --
 ALTER TABLE `administrateurs`
-  MODIFY `ID_Admin` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Admin` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `annonces`
@@ -256,7 +283,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT pour la table `entreprises`
 --
 ALTER TABLE `entreprises`
-  MODIFY `ID_Entreprise` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Entreprise` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `feedback`
@@ -268,13 +295,13 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT pour la table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `ID_Transaction` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Transaction` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `ID_Utilisateur` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Utilisateur` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT pour la table `vues`
@@ -305,15 +332,6 @@ ALTER TABLE `campagnes`
 ALTER TABLE `feedback`
   ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`ID_Utilisateur`) REFERENCES `utilisateurs` (`ID_Utilisateur`),
   ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`ID_Entreprise`) REFERENCES `entreprises` (`ID_Entreprise`);
-
---
--- Contraintes pour la table `transactions`
---
-ALTER TABLE `transactions`
-  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`ID_Emetteur`) REFERENCES `utilisateurs` (`ID_Utilisateur`),
-  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`ID_Receveur`) REFERENCES `utilisateurs` (`ID_Utilisateur`) ON DELETE CASCADE,
-  ADD CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`ID_Emetteur`) REFERENCES `entreprises` (`ID_Entreprise`),
-  ADD CONSTRAINT `transactions_ibfk_4` FOREIGN KEY (`ID_Receveur`) REFERENCES `entreprises` (`ID_Entreprise`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `vues`
