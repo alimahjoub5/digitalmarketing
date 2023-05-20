@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form>
+    <h2>Page Login de L'Admin</h2>
+    
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <label for="password">Mot de passe:</label>
+    <input type="password" id="password" name="password" minlength="8" required>
+    
+    
+    
+    
+    
+    <input type="submit" value="Se connecter">
+  </form>
+  
+      
+<style>
+body {
+  background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba');
+  background-size: cover;
+  background-position: center center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 50px;
+  border-radius: 10px;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  margin-top: 10px;
+}
+
+input[type="submit"] {
+  background-color: #0366d6;
+  color: white;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0048a8;
+}
+
+@media screen and (min-width: 768px) {
+  form {
+    width: 50%;
+    margin: 50px auto;
+  }
+  
+  label, input {
+    width: 100%;
+  }
+  
+  input[type="submit"] {
+    width: 50%;
+  }
+}
+
+
+</style>
+<script>
+  const form = document.querySelector('form');
+const password = document.querySelector('#password');
+const confirmPassword = document.querySelector('#confirm-password');
+
+form.addEventListener('submit', function(event) {
+  if (password.value !== confirmPassword.value) {
+    alert("Les mots de passe ne correspondent pas!");
+    event.preventDefault();
+  }
+});
+
+</script>
+</body>
+</html>    

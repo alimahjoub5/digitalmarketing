@@ -1,0 +1,64 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    margin-top: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .card-header h3 {
+    margin: 0;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="email"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }
+  
+  .small.form-text.text-muted {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+  }
+  
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+ 
+   
