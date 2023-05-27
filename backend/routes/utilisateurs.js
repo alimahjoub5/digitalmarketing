@@ -3,7 +3,6 @@ const router = express.Router();
 const connection = require('../config/config');
 const bodyParser = require('body-parser');
 const validator=require('Validator');
-const bcrypt = require('bcrypt');
 
 
 // Configuration de bodyParser pour traiter les données POST
@@ -61,16 +60,13 @@ router.post('/create', async (req, res) => {
     }
 
     // Hash du mot de passe
-    const saltRounds = 10;
-    const hash = await bcrypt.hash(utilisateur.Mot_de_passe, saltRounds);
-
     const query = 'INSERT INTO utilisateurs (ID_Utilisateur, Nom_Utilisateur, Email, Mot_de_passe, Solde, Image_de_profil, Date_de_naissance, Ville) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
     connection.query(query, [
       utilisateur.ID_utilisateur,
       utilisateur.Nom_Utilisateur,
       utilisateur.Email,
-      hash,
+      utilisateur.Mot_de_passe,
       utilisateur.Solde,
       utilisateur.Image_de_profil,
       utilisateur.Date_de_naissance,

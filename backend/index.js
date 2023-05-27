@@ -21,10 +21,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/login', express.static(path.join(__dirname, 'public', 'admin'), { index: 'index.html' }));
 
 
-// Route pour la page de tableau de bord
+// Route pour la page de tableau de bord de admin
 app.use('/dashboard', express.static(path.join(__dirname, 'public', 'admin'), { index: 'dashboard1.html' }));
-app.use('/profil', express.static(path.join(__dirname, 'public', 'admin'), { index: 'profil.html' }));
+app.use('/adduser', express.static(path.join(__dirname, 'public', 'admin'), { index: 'adduser.html' }));
 app.use('/userlist', express.static(path.join(__dirname, 'public', 'admin'), { index: 'clientlist.html' }));
+app.use('/passchange', express.static(path.join(__dirname, 'public', 'admin'), { index: 'changepass.html' }));
+app.use('/profil', express.static(path.join(__dirname, 'public', 'admin'), { index: 'profil.html' }));
+app.use('/settings', express.static(path.join(__dirname, 'public', 'admin'), { index: 'Settings.html' }));
+app.use('/reports', express.static(path.join(__dirname, 'public', 'admin'), { index: 'reports.html' }));
+
+
+// Route pour la page de tableau de bord de entreprise
+app.use('/login', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'login.html' }));
+app.use('/about0', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'about0.html' }));
+app.use('/about', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'about.html' }));
+
+app.use('/contact', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'contact.html' }));
+app.use('/contact0', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'contact0.html' }));
+app.use('/crud', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'crud.html' }));
+app.use('/index0', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'index0.html' }));
+app.use('/index', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'index.html' }));
+app.use('/register', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'register.html' }));
+
 
 // Routes pour les utilisateurs
 app.use('/user', utilisateurRoutes);

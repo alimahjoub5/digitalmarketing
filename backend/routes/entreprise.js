@@ -3,7 +3,6 @@ const router = express.Router();
 const connection = require('../config/config');
 const bodyParser = require('body-parser');
 const validator=require('Validator');
-const bcrypt = require('bcrypt');
 
 // Configuration de bodyParser pour traiter les données POST
 router.use(bodyParser.json());
@@ -52,8 +51,6 @@ router.post('/create', async (req, res) => {
     }
     
     // Hachage du mot de passe
-    const saltRounds = 10; // Nombre de tours pour le sel de hachage
-    const hash = await bcrypt.hash(utilisateur.Mot_de_passe, saltRounds);
 
     const query = 'INSERT INTO entreprises (ID_Entreprise, Nom_Entreprise, Email, Mot_de_passe, Solde) VALUES (?, ?, ?, ?, ?)';
 
@@ -61,7 +58,7 @@ router.post('/create', async (req, res) => {
       utilisateur.ID_Entreprise,
       utilisateur.Nom_Entreprise,
       utilisateur.Email,
-      hash, // Stocke le hachage dans la base de données au lieu du mot de passe brut
+      utilisateur.Mot_de_passe, // Stocke le hachage dans la base de données au lieu du mot de passe brut
       utilisateur.Solde,
     ]);
     console.log('Entreprise ajoutée avec succès');

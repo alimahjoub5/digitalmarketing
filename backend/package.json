@@ -17,5 +17,8 @@
     "express-validator": "^6.15.0",
     "firebase": "^9.18.0",
     "mysql2": "^3.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
