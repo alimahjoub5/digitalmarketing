@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard professionnel</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="#">Accueil</a></li>
+				<li><a href="#">Tableaux de bord</a></li>
+				<li><a href="#">Paramètres</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section id="chart1">
+			<h2>Graphique 1</h2>
+			<div class="chart-container">
+				<canvas id="chart1-canvas"></canvas>
+			</div>
+		</section>
+		<section id="chart2">
+			<h2>Graphique 2</h2>
+			<div class="chart-container">
+				<canvas id="chart2-canvas"></canvas>
+			</div>
+		</section>
+	</main>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+	<script src="script.js"></script>
+	
+</body>
+</html>

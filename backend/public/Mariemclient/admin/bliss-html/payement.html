@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- style css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Responsive-->
+  <link rel="stylesheet" href="css/responsive.css">
+  <!-- fevicon -->
+  <link rel="icon" href="images/fevicon.png" type="image/gif" />
+  <!-- Tweaks for older IEs-->
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+  <title>payement</title>
+  <link rel="stylesheet" href="2.css">
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px;
+    }
+
+    .container img {
+      max-width: 480px;
+      height: auto;
+    }
+    h2 {
+  position: absolute;
+  left: 260px;
+  top: 250px;
+  
+}
+
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <img src="1.jpg" alt="Image 1">
+    <img src="2.jpg" alt="Image 2"id=2>
+  </div>
+  <h2 class="solde">Solde</h2>
+  <button class="btn-send" onclick="show_pup()">Transfert d'argent</button>
+
+    <div class="card" id="pup">
+     
+
+            <form action="">
+        
+                <!--<div class="row">
+        
+                    <div class="col">
+        
+                    
+                        <div class="inputBox">
+                            <span>cards accepted :</span>
+                            <img src="images/card_img.png" alt="">
+                        </div>
+                        
+                    -->
+
+                        <label for="fname">name on card </label>
+                        <input type="text" id="fname" name="firstname" placeholder="name on card ">
+                    
+                        <label for="lname">credit card number :</label>
+                        <input type="text" id="lname" name="lastname" placeholder="1111-2222-3333-4444">
+                    
+                
+        
+        <button class="btn-close"onclick="hide_pup()">annuler</button>
+        <button class="btn-close" >envoyer</button>
+    </form>
+    </div>
+</div>
+<script>
+    function show_pup(){
+        document.getElementById('pup').classList.add('open');
+
+    }
+    function hide_pup(){
+        document.getElementById('pup').classList.remove('open');
+
+    }
+</script>
+</body>
+</html>
