@@ -24,6 +24,39 @@ router.use((req, res, next) => {
   next();
 });
 
+// Route pour l'adresse
+router.post('/adresse', (req, res) => {
+  // Récupère l'ID de l'utilisateur à partir de la session
+  const userId = req.session.userId;
+  const currentEmail = req.body['current-email'];
+  const newEmail = req.body['new-email'];
+  const confirmEmail = req.body['confirm-email'];
+
+  // Vérifie si l'ID de l'utilisateur est défini
+  if (userId) {
+    // Effectuez ici la logique pour mettre à jour l'adresse email de l'utilisateur dans la base de données
+    // Remplacez les exemples de code ci-dessous par votre propre logique de mise à jour de l'adresse email
+
+    // Exemple de code de mise à jour de l'adresse email dans la base de données
+    connection.query(
+      'UPDATE Administrateurs SET Email = ? WHERE ID = ?',
+      [newEmail, userId],
+      (err, results) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Erreur serveur');
+        } else {
+          res.status(200).send('Adresse email mise à jour avec succès');
+        }
+      }
+    );
+  } else {
+    // Si l'ID de l'utilisateur n'est pas défini, renvoie une réponse avec un code de statut 401
+    res.status(401).send('Non autorisé');
+  }
+});
+
+
 // Route pour la connexion
 router.post('/login', (req, res) => {
   // Récupère les informations de connexion depuis la requête

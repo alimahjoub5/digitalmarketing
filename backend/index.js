@@ -29,6 +29,7 @@ app.use('/passchange', express.static(path.join(__dirname, 'public', 'admin'), {
 app.use('/profil', express.static(path.join(__dirname, 'public', 'admin'), { index: 'profil.html' }));
 app.use('/settings', express.static(path.join(__dirname, 'public', 'admin'), { index: 'Settings.html' }));
 app.use('/reports', express.static(path.join(__dirname, 'public', 'admin'), { index: 'reports.html' }));
+app.use('/changemdp', express.static(path.join(__dirname, 'public', 'admin'), { index: 'changeemail.html' }));
 
 
 // Route pour la page de tableau de bord de entreprise

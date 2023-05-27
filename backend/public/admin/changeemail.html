@@ -85,7 +85,7 @@
         </div>
         <div class="profile-details">
             <!--<img src="images/profile.jpg" alt="">-->
-            <span class="admin_name">Prem Shahi</span>
+            <span class="admin_name" id="admin_name"></span>
             <i class='bx bx-chevron-down' ></i>
         </div>
     </nav>
@@ -96,27 +96,47 @@
         </div>
     </div>
     <div class="container">
-         
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                // Récupère les données de l'utilisateur avec l'ID 1
+                $.ajax({
+                    url: '/admin/getid/1',
+                    method: 'GET',
+                    success: function(rows) {
+                        // Affiche les données de l'utilisateur dans la page
+                        var utilisateur = rows[0];
+                        console.log(utilisateur.Nom_Admin)
+                        $('#admin_name').html($('#admin_name').html() + '<span>' + utilisateur.Nom_Admin + '</span>');    
+                    },
+                    error: function(err) {
+                        console.error(err);
+                    }
+                });
+            });
+  req.session.userId = utilisateur.ID_Admin;
+        </script>
           <div class="card-body">
-            <form>
-              <div class="form-group">
-                <label for="current-email">Current email address</label>
-                <input type="email" id="current-email" name="current-email" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="new-email">New email address</label>
-                <input type="email" id="new-email" name="new-email" class="form-control" required>
-                <small class="form-text text-muted">Please enter a valid email address.</small>
-              </div>
-              <div class="form-group">
-                <label for="confirm-email">Confirm new email address</label>
-                <input type="email" id="confirm-email" name="confirm-email" class="form-control" required>
-                <small class="form-text text-muted">Please re-enter your new email address.</small>
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Update email</button>
-              </div>
-            </form>
+            <form method="post" action="/admin/adresse">
+                <div class="form-group">
+                  <label for="current-email">Current email address</label>
+                  <input type="email" id="current-email" name="current-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="new-email">New email address</label>
+                  <input type="email" id="new-email" name="new-email" class="form-control" required>
+                  <small class="form-text text-muted">Please enter a valid email address.</small>
+                </div>
+                <div class="form-group">
+                  <label for="confirm-email">Confirm new email address</label>
+                  <input type="email" id="confirm-email" name="confirm-email" class="form-control" required>
+                  <small class="form-text text-muted">Please re-enter your new email address.</small>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Update email</button>
+                </div>
+              </form>
+              
           </div>
         </div>
       </div>
