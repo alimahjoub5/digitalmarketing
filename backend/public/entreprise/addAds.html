@@ -83,34 +83,34 @@
                 <h1>Add Ads</h1>
                 <div class="overview-boxes d-flex justify-content-center">
                     <div class="form-container">
-                        <form class="form">
-                            <div class="form-group">
-                                <label for="name">Ad Title:</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter title">
+                        <form class="form" action="/entreprise/upload" method="post" enctype="multipart/form-data">
+                              <div class="form-group">
+                            <label for="name">Ad Title:</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter title  </div>
+                        
+                          <div class="form-group">
+                            <label for="email">Ad Description:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter text">
+                          </div>
+                        
+                          <div class="form-group">
+                            <label for="phone">Cost Per View:</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter number">
+                          </div>
+                        
+                          <div class="form-group">
+                            <label for="photo">Photo:</label>
+                            <div class="input-group">
+                              <input type="file" class="form-control-file" id="photo" name="photo" accept="image/*">
+                              <div class="input-group-append">
+                                <!-- Additional elements can be added here -->
+                              </div>
                             </div>
-        
-                            <div class="form-group">
-                                <label for="email">Ad Description:</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter text">
-                            </div>
-        
-                            <div class="form-group">
-                                <label for="phone">Cost Per View:</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter number">
-                            </div>
-        
-                            <div class="form-group">
-                                <label for="photo">Photo:</label>
-                                <div class="input-group">
-                                    <input type="file" class="form-control-file" id="photo" name="photo" accept="image/*">
-                                    <div class="input-group-append">
-                                        <!-- Additional elements can be added here -->
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <button type="submit" class="btn btn-primary">Add Ad</button>
+                          </div>
+                        
+                          <button type="submit" class="btn btn-primary">Add Ad</button>
                         </form>
+                        
                     </div>
                 </div>
             </div>

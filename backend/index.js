@@ -33,16 +33,17 @@ app.use('/changemdp', express.static(path.join(__dirname, 'public', 'admin'), { 
 
 
 // Route pour la page de tableau de bord de entreprise
-app.use('/login', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'login.html' }));
-app.use('/about0', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'about0.html' }));
-app.use('/about', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'about.html' }));
+app.use('/login', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'login.html' }));
+app.use('/about0', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'about0.html' }));
+app.use('/about', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'about.html' }));
 
-app.use('/contact', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'contact.html' }));
-app.use('/contact0', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'contact0.html' }));
-app.use('/crud', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'crud.html' }));
-app.use('/index0', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'index0.html' }));
-app.use('/index', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'index.html' }));
-app.use('/register', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'register.html' }));
+app.use('/contact', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'contact.html' }));
+app.use('/contact0', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'contact0.html' }));
+app.use('/crud', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'crud.html' }));
+app.use('/index0', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'index0.html' }));
+app.use('/index', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'index.html' }));
+app.use('/register', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'register.html' }));
+app.use('/addads', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'addAds.html' }));
 
 
 app.use(session({

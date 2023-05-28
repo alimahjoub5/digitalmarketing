@@ -8,6 +8,7 @@ const validator=require('Validator');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(express.json());
+const multer = require('multer');
 
 
 
@@ -148,6 +149,47 @@ router.put('/update/:id', async (req, res) => {
     console.error(err);
     res.status(500).send('Erreur serveur');
   }
+});
+
+
+
+//add ads
+
+
+
+// Configuration de Multer pour gérer l'upload de fichiers
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage: storage })
+
+// Route pour gérer l'upload de fichiers
+router.post('/upload', upload.single('photo'), function (req, res, next) {
+  // Récupération du nom du fichier uploadé
+  const fileName = req.file.filename;
+
+  // Insertion des données dans la table Annonce
+  const annonce = {
+    ID_Entreprise: req.body.ID_Entreprise,
+    Titre: req.body.name,
+    Description: req.body.email,
+    Image: fileName,
+    Cout_par_vue: req.body.phone,
+    ID_Categorie: req.body.ID_Categorie
+  };
+  const query = 'INSERT INTO annonces (ID_Entreprise, Titre, Description, Image, Cout_par_vue, ID_Categorie) VALUES (?, ?, ?, ?, ?, ?)';
+  const values = [annonce.ID_Entreprise, annonce.Titre, annonce.Description, annonce.Image, annonce.Cout_par_vue, annonce.ID_Categorie];
+  connection.query(query, values, function (error, results, fields) {
+    if (error) throw error;
+    console.log('Annonce insérée avec succès');
+  });
+
+  res.send('File uploaded successfully');
 });
 
 
