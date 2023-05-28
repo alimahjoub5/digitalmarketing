@@ -45,6 +45,13 @@ app.use('/index', express.static(path.join(__dirname, 'public', 'enreprise'), { 
 app.use('/register', express.static(path.join(__dirname, 'public', 'enreprise'), { index: 'register.html' }));
 
 
+app.use(session({
+  secret: '81tunisie',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 // Routes pour les utilisateurs
 app.use('/user', utilisateurRoutes);
 app.use('/admin', adminRoutes);

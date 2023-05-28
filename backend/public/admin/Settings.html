@@ -92,21 +92,40 @@
                 <h1></h1>
                 </div>
             </div>
-           
-            <div class="rightbox">
-              <div class="profile">
-                <h1>Personal Info</h1>
-                <h2>Full Name</h2>
-                <p>Julie Park </p>
-                <h2>Birthday</h2>
-                <p>July 21</p>
-                <h2>Gender</h2>
-                <p>Female</p>
-                <h2>Email</h2>
-                <p>example@example.com <a href="/changemdp"><button class="btn">update</button></a></p>
-                <h2>Password </h2>
-                <p>••••••• <button class="btn">Change</button></p>
-              </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // Récupère les données de l'utilisateur avec l'ID 1
+                    $.ajax({
+                        url: '/admin/getid/1',
+                        method: 'GET',
+                        success: function(rows) {
+                            // Affiche les données de l'utilisateur dans la page
+                            var utilisateur = rows[0];
+                            console.log(utilisateur.Nom_Admin)
+                            $('#admin_name').html($('#admin_name').html() + '<span>' + utilisateur.Nom_Admin + '</span>');
+                            $('#email').html($('#email').html() + '<span> ' + utilisateur.Email+ '</span>');
+        
+                        },
+                        error: function(err) {
+                            console.error(err);
+                        }
+                    });
+                });
+            </script>
+<div class="rightbox">
+    <div class="profile">
+      <h1>Personal Info</h1>
+      <h2>Full Name</h2>
+      <p id="admin_name"></p>
+      <h2>Email</h2>
+      <p id="email"></p>
+      <a href="/changemdp"><button class="btn">Update</button></a>
+      <h2>Password</h2>
+      <p>••••••• <button class="btn">Change</button></p>
+    </div>
+  </div>
+  
              
           
               

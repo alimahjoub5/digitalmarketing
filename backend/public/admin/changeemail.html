@@ -99,22 +99,32 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             $(document).ready(function() {
-                // Récupère les données de l'utilisateur avec l'ID 1
                 $.ajax({
-                    url: '/admin/getid/1',
-                    method: 'GET',
-                    success: function(rows) {
-                        // Affiche les données de l'utilisateur dans la page
-                        var utilisateur = rows[0];
-                        console.log(utilisateur.Nom_Admin)
-                        $('#admin_name').html($('#admin_name').html() + '<span>' + utilisateur.Nom_Admin + '</span>');    
-                    },
-                    error: function(err) {
-                        console.error(err);
-                    }
-                });
-            });
-  req.session.userId = utilisateur.ID_Admin;
+  url: '/admin/adresse',
+  method: 'POST',
+  data: {
+    'current-email': currentEmail,
+    'new-email': newEmail,
+    'confirm-email': confirmEmail
+  },
+  xhrFields: {
+    withCredentials: true
+  
+}, 
+  
+// Inclure les informations de session dans la demande
+  success: function(response) {
+    console.log(response);
+    // Traitement réussi
+  },
+  error: function(xhr, status, error) {
+    console.error(xhr.responseText);
+
+    // Traitement des erreurs
+  }});
+
+});
+
         </script>
           <div class="card-body">
             <form method="post" action="/admin/adresse">

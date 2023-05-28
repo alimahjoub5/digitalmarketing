@@ -11,26 +11,14 @@ router.use(express.json());
 
 const session = require('express-session');
 
-// Middleware de session
-router.use(session({
-  secret: 'ma clé secrète',
-  resave: false,
-  saveUninitialized: false
-}));
 
-// Middleware de session initialisation
-router.use((req, res, next) => {
-  req.session.userId = null;
-  next();
-});
 
-// Route pour l'adresse
+
+
 router.post('/adresse', (req, res) => {
   // Récupère l'ID de l'utilisateur à partir de la session
   const userId = req.session.userId;
-  const currentEmail = req.body['current-email'];
   const newEmail = req.body['new-email'];
-  const confirmEmail = req.body['confirm-email'];
 
   // Vérifie si l'ID de l'utilisateur est défini
   if (userId) {
@@ -39,22 +27,55 @@ router.post('/adresse', (req, res) => {
 
     // Exemple de code de mise à jour de l'adresse email dans la base de données
     connection.query(
-      'UPDATE Administrateurs SET Email = ? WHERE ID = ?',
+      'UPDATE Administrateurs SET Email = ? WHERE ID_Admin = ?;',
       [newEmail, userId],
       (err, results) => {
         if (err) {
           console.error(err);
           res.status(500).send('Erreur serveur');
-        } else {
-          res.status(200).send('Adresse email mise à jour avec succès');
-        }
+        }else {
+            res.redirect('/settings');
+          }
       }
     );
+    
   } else {
     // Si l'ID de l'utilisateur n'est pas défini, renvoie une réponse avec un code de statut 401
     res.status(401).send('Non autorisé');
   }
 });
+
+
+router.post('/chpass', (req, res) => {
+  // Récupère l'ID de l'utilisateur à partir de la session
+  const userId = req.session.userId;
+  const newEmail = req.body['new-email'];
+
+  // Vérifie si l'ID de l'utilisateur est défini
+  if (userId) {
+    // Effectuez ici la logique pour mettre à jour l'adresse email de l'utilisateur dans la base de données
+    // Remplacez les exemples de code ci-dessous par votre propre logique de mise à jour de l'adresse email
+
+    // Exemple de code de mise à jour de l'adresse email dans la base de données
+    connection.query(
+      'UPDATE Administrateurs SET Mot_de_passe = ? WHERE ID_Admin = ?;',
+      [newEmail, userId],
+      (err, results) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Erreur serveur');
+        }else {
+            res.redirect('/settings');
+          }
+      }
+    );
+    
+  } else {
+    // Si l'ID de l'utilisateur n'est pas défini, renvoie une réponse avec un code de statut 401
+    res.status(401).send('Non autorisé');
+  }
+});
+
 
 
 // Route pour la connexion

@@ -23,15 +23,13 @@
   </form>
   
   <script>
-    $(function() {
+$(function() {
   $('#login-form').on('submit', function(event) {
-    event.preventDefault(); // Empêche le formulaire de se soumettre normalement
+    event.preventDefault();
 
-    // Récupère les valeurs des champs d'entrée
     var email = $('#email').val();
     var password = $('#password').val();
 
-    // Envoie une requête POST à l'API admin/login
     $.ajax({
       url: '/admin/login',
       method: 'POST',
@@ -40,11 +38,15 @@
         password: password
       },
       success: function(response) {
-        // Si la connexion réussit, redirige l'utilisateur vers une autre page
+        // Récupérer l'id de l'utilisateur à partir de la réponse (si votre API renvoie l'id)
+        var userId = response.id;
+console.log(userId);
+        // Stocker l'id de l'utilisateur dans la session
+        sessionStorage.setItem('userId', userId);
+
         window.location.href = '../admin/dashboard1.html';
       },
       error: function(xhr, status, error) {
-        // Si la connexion échoue, affiche un message d'erreur à l'utilisateur
         $('#error-message').text('Adresse e-mail ou mot de passe incorrect.');
       }
     });
