@@ -157,30 +157,55 @@
         
         <div class="ads-container">
             <h1>Ads list</h1>
-            <table class="ads-table table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Photo</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>ad1</td>
-                        <td>save 20%</td>
-                        <td><img src="1.jpeg" alt="erreur"></td>
-                        <td class="ads-actions">
-                            <a class="btn btn-success" onclick="return confirm('Êtes-vous sûr de vouloir modifier cet élément ?');">Update</a>
-                            <a class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">Delete</a>
-                        </td>
-                    </tr>
-                </tbody>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+          
+          <div class="container">
+            <h2>Annonces</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Photo</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="annonces-table">
+              </tbody>
             </table>
-        </div>
+          </div>
+          
+          <script>
+            $(document).ready(function() {
+              // Récupère les données d'annonces
+              $.ajax({
+                url: '/entreprise/getads',
+                method: 'GET',
+                success: function(rows) {
+                  // Affiche les données d'annonces dans la table
+                  rows.forEach(function(annonce) {
+                    var row = '<tr>' +
+                                '<td>' + annonce.ID_Annonce + '</td>' +
+                                '<td>' + annonce.Titre + '</td>' +
+                                '<td>' + annonce.Description + '</td>' +
+                                '<td><img src="./../../../uploads/' + annonce.Image + '" alt="erreur"></td>' +
+                                '<td class="ads-actions">' +
+                                  '<a class="btn btn-success" onclick="return confirm(\'Êtes-vous sûr de vouloir modifier cet élément ?\');">Update</a>' +
+                                  '<a class="btn btn-danger" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer cet élément ?\');">Delete</a>' +
+                                '</td>' +
+                              '</tr>';
+                    $('#annonces-table').append(row);
+                  });
+                },
+                error: function(err) {
+                  console.error(err);
+                }
+              });
+            });
+          </script>
         
          
          </html>

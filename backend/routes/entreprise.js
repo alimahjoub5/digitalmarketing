@@ -27,31 +27,7 @@ router.post('/create', async (req, res) => {
       Solde: req.body.Solde,
     };
     
-    // Vérification des champs obligatoires
-    if (!utilisateur.Nom_Entreprise) {
-      return res.status(400).send('Le champ Nom_Entreprise est obligatoire');
-    }
-    
-    if (!utilisateur.Email) {
-      return res.status(400).send('Le champ Email est obligatoire');
-    }
-    
-    if (!utilisateur.Mot_de_passe) {
-      return res.status(400).send('Le champ Mot_de_passe est obligatoire');
-    }
-    
-    
-    // Vérification de l'adresse e-mail
-    if (!validator.isEmail(utilisateur.Email)) {
-      return res.status(400).send('Adresse e-mail invalide');
-    }
-    
-    // Vérification de la complexité du mot de passe
-    if (utilisateur.Mot_de_passe.length < 8 || !/\d/.test(utilisateur.Mot_de_passe) || !/[A-Z]/.test(utilisateur.Mot_de_passe) || !/[a-z]/.test(utilisateur.Mot_de_passe)) {
-      return res.status(400).send('Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre');
-    }
-    
-    // Hachage du mot de passe
+   
 
     const query = 'INSERT INTO entreprises (ID_Entreprise, Nom_Entreprise, Email, Mot_de_passe, Solde) VALUES (?, ?, ?, ?, ?)';
 
@@ -156,6 +132,21 @@ router.put('/update/:id', async (req, res) => {
 //add ads
 
 
+// Route pour récupérer les catégories
+router.get('/categories', (req, res) => {
+  connection.query('SELECT ID_Categorie, Nom_Categorie FROM categories', (err, results) => {
+    if (err) {
+      console.error('Error retrieving categories: ' + err.stack);
+      return;
+    }
+
+    const categories = results.map(category => `${category.ID_Categorie},${category.Nom_Categorie}`).join('\n');
+    res.send(categories);
+  });
+});
+
+
+
 
 // Configuration de Multer pour gérer l'upload de fichiers
 const storage = multer.diskStorage({
@@ -175,21 +166,61 @@ router.post('/upload', upload.single('photo'), function (req, res, next) {
 
   // Insertion des données dans la table Annonce
   const annonce = {
-    ID_Entreprise: req.body.ID_Entreprise,
     Titre: req.body.name,
     Description: req.body.email,
     Image: fileName,
     Cout_par_vue: req.body.phone,
-    ID_Categorie: req.body.ID_Categorie
+    ID_Categorie: req.body.category
   };
   const query = 'INSERT INTO annonces (ID_Entreprise, Titre, Description, Image, Cout_par_vue, ID_Categorie) VALUES (?, ?, ?, ?, ?, ?)';
-  const values = [annonce.ID_Entreprise, annonce.Titre, annonce.Description, annonce.Image, annonce.Cout_par_vue, annonce.ID_Categorie];
+  const values = [ req.session.userId, annonce.Titre, annonce.Description, annonce.Image, annonce.Cout_par_vue, annonce.ID_Categorie];
   connection.query(query, values, function (error, results, fields) {
     if (error) throw error;
     console.log('Annonce insérée avec succès');
   });
 
   res.send('File uploaded successfully');
+});
+
+
+
+// Route pour récupérer tous les utilisateurs
+router.get('/getads', (req, res) => {
+  connection.query('SELECT * FROM `annonces`', (err, rows) => {
+    if (err) throw err;
+    console.log(rows);
+    res.send(rows);
+  });
+});
+
+
+
+
+// Route pour la connexion
+router.post('/login', (req, res) => {
+  // Récupère les informations de connexion depuis la requête
+  const email = req.body.Email;
+  const password = req.body.Mot_de_passe;
+
+  // Vérifie les informations de connexion dans la base de données
+  connection.query(
+    'SELECT * FROM entreprises WHERE Email = ?',
+    [email, password],
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Erreur serveur');
+      } else if (results.length > 0) {
+        // Redirige vers le tableau de bord de l'administrateur
+        res.redirect('/index');
+      } else {
+        // Si la connexion échoue, renvoie une réponse avec un code de statut 401
+        console.log(results);
+        // Rediriger vers la page de connexion avec un message d'erreur
+        res.redirect('/login1?erreur=1');
+      }
+    }
+  );
 });
 
 

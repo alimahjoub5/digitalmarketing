@@ -88,61 +88,35 @@
                   </div>
                </div>
                <div class="col-md-12">
-                  <form id="request" action="index.html" class="main_form">
+                  <form id="request" action="/entreprise/create" class="main_form" method="POST">
                      <div class="row">
-                        <div class="col-md-6 ">
-                           <input class="form_control" required placeholder="UserName" type="type" name=" Name"> 
-                        </div>
-                        <div class="col-md-6">
-                           <input class="form_control"  required placeholder="Email" type="email" name="Email"> 
-                        </div>
-                        <div class="col-md-6">
-                           <input class="form_control" required placeholder="Password" type="password" name="Password">                          
-                        </div>
-                        <div class="col-md-6">
-                           <input class="form_control" required placeholder="Password Confirmation" type="password" name="Select">                          
-                        </div>
-                        <div class="col-md-6 ">
-                           <input class="form_control" required placeholder="Time" type="type" name=" Time"> 
-                        </div>
-                        <div class="col-md-6">
-                           <input type="text" required class="form_control" id="birth year" placeholder="Select Date" >
-                        </div>
-                        <div class="col-md-12">
-                           <textarea style=" color: #d0d0cf;" class="textarea" placeholder="Message" type="type" name="message">message </textarea>
-                        </div>
-                        <tr>
-                           <td colspan="3" align="center"><br><br><table cellpadding="0" cellspacing="0">
-                              <tbody>
-                                 <tr>
-                                    <td style="vertical-align:top">
-                                       <input type="checkbox" id="tosagree" name="tosagree" value="1"></td>
-                                    <td>
-                                       <div class="desc_cb">I declare to have read, understood, and accepted the 
-                                          <a href="/m/t/" target="tos">Terms of Service</a>
-                                           and <a href="/m/pp/" target="pp">Privacy Policy</a>.
-                        </div>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td colspan="2" style="line-height:4px;height:4px;"></td>
-                  </tr>
-                  <tr><td style="vertical-align:top"><input type="checkbox" id="ppagree" name="ppagree" value="1"></td>
-                     <td><div class="desc_cb">I give my consent to the processing of my personal data.
-                        <div id="errorsDiv_ppagree" class="innerError"></div>
+                       <div class="col-md-6">
+                         <input class="form_control" required placeholder="Nom_Entreprise" type="text" name="Nom_Entreprise">
+                       </div>
+                       <div class="col-md-6">
+                         <input class="form_control" required placeholder="Email" type="email" name="Email">
+                       </div>
+                       <div class="col-md-6">
+                         <input class="form_control" required placeholder="Mot_de_passe" type="password" name="Mot_de_passe">
+                       </div>
+                       <div class="col-md-6">
+                         <input class="form_control" required placeholder="Solde" type="number" name="Solde">
+                       </div>
+                       <div class="col-md-12">
+                         <input type="checkbox" id="tosagree" name="tosagree" value="1" required>
+                         <label for="tosagree">Je déclare avoir lu, compris et accepté les <a href="/m/t/" target="tos">Conditions d'utilisation</a> et la <a href="/m/pp/" target="pp">Politique de confidentialité</a>.</label>
+                       </div>
+                       <div class="col-md-12">
+                         <input type="checkbox" id="ppagree" name="ppagree" value="1" required>
+                         <label for="ppagree">J'accepte le traitement de mes données personnelles.</label>
+                       </div>
+                       <div class="col-md-12">
+                         <button class="send_btn" type="submit">Envoyer</button>
+                       </div>
                      </div>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-         <br>
-         <br>
-                        <div class="col-md-12">
-                          <br> <button class="send_btn" >Send Now</button>
-                        </div>
-                        
-                     </div>
-                  </form>
+                   </form>
+                   
+                   
                </div>
             </div>
          </div>

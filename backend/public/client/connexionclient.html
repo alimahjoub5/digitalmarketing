@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- style css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Responsive-->
+  <link rel="stylesheet" href="css/responsive.css">
+  <!-- fevicon -->
+  <link rel="icon" href="images/fevicon.png" type="image/gif" />
+  <!-- Tweaks for older IEs-->
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+  <title>connexion client</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 20px 0 0;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      font-size: 16px;
+      background-color: #f1f1f1;
+    }
+
+    input[type="submit"] {
+      background-color: #0366d6;
+      color: white;
+      margin-top: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 20px;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0048a8;
+    }
+
+    .photo {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 0 0 20px;
+    }
+
+    .photo img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    @media screen and (min-width: 768px) {
+      form {
+        width: 50%;
+        margin: 50px auto;
+      }
+
+      label, input {
+        width: 100%;
+      }
+
+      input[type="submit"] {
+        width: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header-area">
+    <div class="container">
+       <div class="row d_flex">
+          <div class=" col-md-6 col-sm-9">
+             <div class="logo">
+                <a href="index.html">NeoBux</a>
+             </div>
+          </div>
+          <div class="col-md-3 col-sm-11">
+             <div class="navbar-area">
+                <nav class="site-navbar">
+                   <ul>
+                      <li><a class="active" href="index.html">Home</a></li>
+                      <li><a href="Forum.html">Forum</a></li>
+                      <li><a href="inscriptionclient.html">Register</a></li>
+                      <li><a href="connexionclient.html">Login</a></li>  
+                      <li class="d_none"><a href="Javascript:void(0)"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                      <li class="d_none"><a href="Javascript:void(0)"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                   </ul>
+                   <button class="nav-toggler">
+                   <span></span>
+                   </button>
+                </nav>
+             </div>
+          </div>
+       </div>
+    </div>
+ </header>
+
+  <div class="container">
+    <form>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" name="password" required>
+
+
+      <a href="index2.html">
+     <input type="submit" value="Connexion">  </a>
+    </form>
+    <div class="photo">
+      <img src="img1.jpg" alt="Image de connexion">
+    </div>
+  </div>
+
+  <script>
+    const form = document.querySelector('form');
+  const password = document.querySelector('#password');
+  const confirmPassword = document.querySelector('#confirm-password');
+  
+  form.addEventListener('submit', function(event) {
+    if (password.value !== confirmPassword.value) {
+      alert("Les mots de passe ne correspondent pas!");
+      event.preventDefault();
+    }
+  });
+  
+  </script>
+  </body>
+</html>
