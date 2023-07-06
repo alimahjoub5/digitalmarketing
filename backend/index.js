@@ -46,6 +46,16 @@ app.use('/register', express.static(path.join(__dirname, 'public', 'entreprise')
 app.use('/addads', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'addAds.html' }));
 app.use('/listads', express.static(path.join(__dirname, 'public', 'entreprise'), { index: 'listads.html' }));
 
+// Route pour la page de tableau de bord de client
+app.use('/index11', express.static(path.join(__dirname, 'public', 'client'), { index: 'index2.html' }));
+app.use('/inscri', express.static(path.join(__dirname, 'public', 'client'), { index: 'inscriptionclient.html' }));
+app.use('/payment', express.static(path.join(__dirname, 'public', 'client'), { index: 'payment.html' }));
+app.use('/profile', express.static(path.join(__dirname, 'public', 'client'), { index: 'profil.html' }));
+app.use('/forum', express.static(path.join(__dirname, 'public', 'client'), { index: 'forum.html' }));
+app.use('/connexion', express.static(path.join(__dirname, 'public', 'client'), { index: 'connexionclient.html' }));
+
+app.use('/', express.static(path.join(__dirname, 'public'), { index: 'index.html' }));
+
 
 app.use(session({
   secret: '81tunisie',

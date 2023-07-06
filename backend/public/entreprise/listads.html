@@ -194,7 +194,7 @@
                                 '<td><img src="./../../../uploads/' + annonce.Image + '" alt="erreur"></td>' +
                                 '<td class="ads-actions">' +
                                   '<a class="btn btn-success" onclick="return confirm(\'Êtes-vous sûr de vouloir modifier cet élément ?\');">Update</a>' +
-                                  '<a class="btn btn-danger" onclick="return confirm(\'Êtes-vous sûr de vouloir supprimer cet élément ?\');">Delete</a>' +
+                                  '<a class="btn btn-danger" onclick="deleteAnnonce(' + annonce.ID_Annonce + ')">Delete</a>' +
                                 '</td>' +
                               '</tr>';
                     $('#annonces-table').append(row);
@@ -207,6 +207,31 @@
             });
           </script>
         
-         
+        
+
+        <script>
+        function deleteAnnonce(annonceId) {
+          if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
+            // Envoie une requête HTTP DELETE à l'API
+            fetch(`/entreprise/annonces/${annonceId}`, {
+              method: 'DELETE'
+            })
+            .then(response => {
+              if (response.ok) {
+                // Actualise la page pour afficher les annonces mises à jour
+                window.location.reload();
+              } else {
+                // Affiche un message d'erreur
+                alert('La suppression de l\'annonce a échoué. Veuillez réessayer plus tard.');
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              alert('Une erreur s\'est produite. Veuillez réessayer plus tard.');
+            });
+          }
+        }
+        </script>
+        
          </html>
                  

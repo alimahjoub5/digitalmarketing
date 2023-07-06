@@ -15,36 +15,28 @@ const multer = require('multer');
 
 
 
-router.post('/create', async (req, res) => {
-  try {
-    console.log('Requête reçue :', req.body);
-    
-    const utilisateur = {
-      ID_Entreprise: req.body.ID_Entreprise,
-      Nom_Entreprise: req.body.Nom_Entreprise,
-      Email: req.body.Email,
-      Mot_de_passe: req.body.Mot_de_passe,
-      Solde: req.body.Solde,
-    };
-    
-   
 
-    const query = 'INSERT INTO entreprises (ID_Entreprise, Nom_Entreprise, Email, Mot_de_passe, Solde) VALUES (?, ?, ?, ?, ?)';
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
 
-    connection.query(query, [
-      utilisateur.ID_Entreprise,
-      utilisateur.Nom_Entreprise,
-      utilisateur.Email,
-      utilisateur.Mot_de_passe, // Stocke le hachage dans la base de données au lieu du mot de passe brut
-      utilisateur.Solde,
-    ]);
-    console.log('Entreprise ajoutée avec succès');
-    res.send('Entreprise ajoutée avec succès');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Erreur serveur');
-  }
+router.post('/user/create', (req, res) => {
+  const nomUtilisateur = req.body.nom_utilisateur;
+  const email = req.body.email;
+  const telephone = req.body.telephone;
+  const motDePasse = req.body.mot_de_passe;
+  const dateNaissance = req.body.date_naissance;
+  const ville = req.body.ville;
+
+  console.log('Nom d\'utilisateur :', nomUtilisateur);
+  console.log('Email :', email);
+  console.log('Téléphone :', telephone);
+  console.log('Mot de passe :', motDePasse);
+  console.log('Date de naissance :', dateNaissance);
+  console.log('Ville :', ville);
+
+  res.sendStatus(200);
 });
+
 
 
 
@@ -235,5 +227,27 @@ router.delete('/del/:id', (req, res) => {
       res.send(rows);
     });
   });
+
+  // Route pour supprimer un annonces
+
+  router.delete('/annonces/:id', async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const query = 'DELETE FROM annonces WHERE ID_Annonce = ?';
+      connection.query(query, [userId], (err, result) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Erreur serveur');
+        } else {
+          console.log('Utilisateur supprimé avec succès');
+          res.send('Utilisateur supprimé avec succès');
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Erreur serveur');
+    }
+  });
+
 
 module.exports=router;

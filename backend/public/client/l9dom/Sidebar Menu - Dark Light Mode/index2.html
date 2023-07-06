@@ -1,44 +1,20 @@
+<!-- Coding by CodingLab | www.codinglabweb.com -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
- 
-  <title>payement</title>
-  <link rel="stylesheet" href="style22.css">
-  <style>
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 60px;
-    }
-
-    .container img {
-      max-width: 480px;
-      height: auto;
-    }
-    h2 {
-  position: absolute;
-  left: 260px;
-  top: 250px;
-  
-}
-h3 {
-  position: absolute;
-  left: 350px;
-  top: 380px;
-  
-}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="style2.css">
+    
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+    <title>Dashboard Sidebar Menu</title> 
 </head>
 <body>
-  
- 
     <nav class="sidebar close">
         <header>
             <div class="image-text">
@@ -65,28 +41,28 @@ h3 {
 
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="profil.html">
+                        <a href="#">
                             <i class='bx bx-home-alt icon' ></i>
                             <span class="text nav-text">Profil</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
-                        <a href="payement.html">
+                        <a href="#">
                             <i class='bx bx-bar-chart-alt-2 icon' ></i>
                             <span class="text nav-text">consult currenc</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
-                        <a href="./service box/ads.html">
+                        <a href="#">
                             <i class='bx bx-book-alt icon'></i>
                             <span class="text nav-text">list ads</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
-                        <a href="setting.html">
+                        <a href="#">
                             <i class='bx bx-cog icon' ></i>
                             <span class="text nav-text">Setting</span>
                         </a>
@@ -120,45 +96,12 @@ h3 {
         </div>
 
     </nav>
-</div>
-<div class="container">
-  <img src="1.jpg" alt="Image 1">
-  <img src="2.jpg" alt="Image 2"id=2>
-</div>
-  <h2 class="solde">Solde</h2>
-  <h3 class="solde">------</h3>
-  <button class="btn-send" onclick="show_pup()">Transfert d'argent</button>
 
-    <div class="card" id="pup">
-     
+    <section class="home">
+        <div class="text"></div>
+    </section>
 
-        
-                <!--<div class="row">
-        
-                    <div class="col">
-        
-                    
-                        <div class="inputBox">
-                            <span>cards accepted :</span>
-                            <img src="images/card_img.png" alt="">
-                        </div>
-                        
-                    -->
-                    <form action="/exchange/transactionClient" method="post">
-                        <label for="fname">name on card </label>
-                        <input type="text" id="emetteur" name="emetteur" placeholder="ID Emetteur ">
-                    
-                        <label for="lname">credit card number :</label>
-                        <input type="text" id="receveur" name="receveur" placeholder="Id Receveur">
-                        <label for="fname">Montant</label>
-                        <input type="text" id="montant" name="montant" placeholder="Montant ">
-                
-        
-        <button class="btn-close"id="annul" onclick="hide_pup()">annuler</button>
-        <button class="btn-close" >envoyer</button>
-    </form>
-    </div>
-</div>
-<script src="script2.js"></script>
+    <script src="script22.js"></script>
+
 </body>
 </html>

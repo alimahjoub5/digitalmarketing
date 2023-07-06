@@ -146,35 +146,40 @@
  </header>
   <h1>.</h1>
   <div class="container">
-    <form>
-      <label for="username">Nom d'utilisateur :</label>
-      <input type="text" id="username" name="username" required>
-        
-  <label for="prenom">Prénom:</label>
-  <input type="text" id="prenom" name="prenom" required>
+    <form id="inscription-form" action="/user/create" method="POST">
   
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
-  <label for="telephone">Téléphone:</label>
-  <input type="tel" id="telephone" name="telephone" pattern="[0-9]{10}" required>
-  <label for="ville">adresse:</label>
-  <input type="text" id="ville" name="ville" required>
-  <label for="ville">Ville:</label>
-  <input type="text" id="ville" name="ville" required>
-
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" required>
-
-      <label for="confirm-password">Confirmer le mot de passe :</label>
-      <input type="password" id="confirm-password" name="confirm-password" required>
-
-      <input type="submit" value="Connexion">
+      <label for="nom_utilisateur">Nom d'utilisateur :</label>
+      <input type="text" id="nom_utilisateur" name="nom_utilisateur" required>
+  
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required>
+  
+      <label for="telephone">Téléphone :</label>
+      <input type="tel" id="telephone" name="telephone" required>
+  
+      <label for="mot_de_passe">Mot de passe :</label>
+      <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+  
+  
+      <label for="_naissance">Date de naissance :</label>
+      <input type="date" id="date_naissance" name="date_naissance" required>
+  
+      <label for="ville">Ville :</label>
+      <input type="text" id="ville" name="ville" required>
+  
+      <input type="submit" value="S'inscrire">
     </form>
     <div class="photo">
       <img src="img1.jpg" alt="Image de connexion">
     </div>
+    <script src="ajax.js"></script>
   </div>
- 
+  
+  
+    
+
+  
+  
 
 
   <script>

@@ -134,7 +134,7 @@
  </header>
 
   <div class="container">
-    <form>
+    <form action="/user/login" class="main_form" method="POST">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
@@ -142,9 +142,40 @@
       <input type="password" id="password" name="password" required>
 
 
-      <a href="index2.html">
-     <input type="submit" value="Connexion">  </a>
+     <input type="submit" value="Connexion"> 
     </form>
+
+    <script>
+      $(function() {
+        $('#login-form').on('submit', function(event) {
+          event.preventDefault();
+      
+          var email = $('#email').val();
+          var password = $('#password').val();
+      
+          $.ajax({
+            url: '/admin/login',
+            method: 'POST',
+            data: {
+              email: email,
+              password: password
+            },
+            success: function(response) {
+              // Récupérer l'id de l'utilisateur à partir de la réponse (si votre API renvoie l'id)
+              var userId = response.id;
+      console.log(userId);
+              // Stocker l'id de l'utilisateur dans la session
+              sessionStorage.setItem('userId', userId);
+      
+              window.location.href = '../admin/dashboard1.html';
+            },
+            error: function(xhr, status, error) {
+              $('#error-message').text('Adresse e-mail ou mot de passe incorrect.');
+            }
+          });
+        });
+      });
+</script>
     <div class="photo">
       <img src="img1.jpg" alt="Image de connexion">
     </div>
